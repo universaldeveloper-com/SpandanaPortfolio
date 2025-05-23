@@ -35,19 +35,26 @@
     <main class="page-content">
         <section class="section about-me-section">
             <div class="container">
-                <h2 class="section-title">About Me</h2>
-                <div class="about-grid">
-                    <div class="about-summary">
+                <h2 class="section-title animate-on-scroll">About Me</h2>
+
+                <div class="about-content-wrapper">
+                    <div class="about-card summary-card animate-on-scroll">
+                        <i class="fas fa-user-circle icon-large"></i>
+                        <h3>My Profile</h3>
                         <p>
                             I am a motivated and detail-oriented B.Tech graduate in Electronics and Communication Engineering with a strong
                             foundation in Python programming, RESTful API design, database, and web technologies. My expertise lies in frameworks
                             like Django and FastAPI, complemented by practical knowledge of object-oriented programming (OOP) and unit testing.
+                        </p>
+                        <p>
                             I am eager to contribute to dynamic software development teams, building innovative, scalable solutions across
                             diverse technology stacks. My passion for technology drives me to continuously learn and adapt to new challenges,
                             ensuring robust and efficient solutions.
                         </p>
                     </div>
-                    <div class="about-details">
+
+                    <div class="about-card education-card animate-on-scroll">
+                        <i class="fas fa-graduation-cap icon-large"></i>
                         <h3>Education</h3>
                         <ul>
                             <li>
@@ -56,13 +63,16 @@
                                 <small>Nov 2020 - June 2024 | CGPA: 6.66</small>
                             </li>
                         </ul>
+                    </div>
 
+                    <div class="about-card interpersonal-skills-card animate-on-scroll">
+                        <i class="fas fa-users icon-large"></i>
                         <h3>Interpersonal Skills</h3>
                         <ul>
-                            <li><i class="fas fa-lightbulb"></i> Problem-Solving & Analytical Thinking</li>
-                            <li><i class="fas fa-comments"></i> Communication & Teamwork</li>
-                            <li><i class="fas fa-exchange-alt"></i> Adaptability & Time Management</li>
-                            <li><i class="fas fa-brain"></i> Eagerness to Learn New Technologies</li>
+                            <li><i class="fas fa-lightbulb list-icon"></i> Problem-Solving & Analytical Thinking</li>
+                            <li><i class="fas fa-comments list-icon"></i> Communication & Teamwork</li>
+                            <li><i class="fas fa-sync-alt list-icon"></i> Adaptability & Time Management</li>
+                            <li><i class="fas fa-brain list-icon"></i> Eagerness to Learn New Technologies</li>
                         </ul>
                     </div>
                 </div>
@@ -71,15 +81,15 @@
 
         <section class="section contact-section">
             <div class="container">
-                <h2 class="section-title">Get in Touch</h2>
-                <p class="contact-intro">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out!</p>
-                <div class="contact-info">
+                <h2 class="section-title animate-on-scroll">Get in Touch</h2>
+                <p class="contact-intro animate-on-scroll">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out!</p>
+                <div class="contact-info animate-on-scroll">
                     <p><i class="fas fa-phone-alt"></i> <strong>Phone:</strong> +91 8523047632</p>
                     <p><i class="fas fa-envelope"></i> <strong>Email:</strong> <a href="mailto:bingispandana21@gmail.com">bingispandana21@gmail.com</a></p>
                     <p><i class="fab fa-linkedin"></i> <strong>LinkedIn:</strong> <a href="http://linkedin.com/in/spandana-bingi-4353782b6" target="_blank" rel="noopener noreferrer">Spandana Bingi</a></p>
                 </div>
 
-                <form class="contact-form" action="https://formspree.io/f/your_form_id" method="POST" id="contactForm">
+                <form class="contact-form animate-on-scroll" action="https://formspree.io/f/your_form_id" method="POST" id="contactForm">
                     <p class="form-note">For direct inquiries, please use the form below.</p>
                     <div class="form-group">
                         <label for="name">Your Name:</label>
@@ -98,7 +108,6 @@
                         <textarea id="message" name="message" rows="6" required placeholder="Your detailed message..."></textarea>
                     </div>
                     <button type="submit" class="cta-button">Send Message <i class="fas fa-paper-plane"></i></button>
-                    <!-- formStatus message will be handled by the modal now -->
                 </form>
             </div>
         </section>
