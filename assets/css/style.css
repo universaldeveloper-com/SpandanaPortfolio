@@ -13,10 +13,11 @@
     --secondary-color-light: #8e8e93; /* iOS secondary text */
     --card-background-light: #ffffff;
     --border-color-light: #e0e0e0;
-    --hero-overlay-light: rgba(255, 255, 255, 0.7); /* Slightly translucent white */
+    --hero-overlay-light: rgba(255, 255, 255, 0.6); /* Slightly more translucent white */
     --navbar-bg-light: rgba(255, 255, 255, 0.8);
     --navbar-border-light: rgba(0, 0, 0, 0.1);
     --shadow-color-light: rgba(0, 0, 0, 0.08);
+    --modal-bg-light: rgba(255, 255, 255, 0.9);
 
     /* Dark Theme Colors */
     --background-color-dark: #1c1c1e; /* iOS dark background */
@@ -25,15 +26,16 @@
     --secondary-color-dark: #aeaeb2;  /* iOS secondary text */
     --card-background-dark: #2c2c2e;
     --border-color-dark: #48484a;
-    --hero-overlay-dark: rgba(0, 0, 0, 0.7); /* Slightly translucent black */
+    --hero-overlay-dark: rgba(0, 0, 0, 0.6); /* Slightly more translucent black */
     --navbar-bg-dark: rgba(28, 28, 30, 0.8);
     --navbar-border-dark: rgba(255, 255, 255, 0.1);
-    --shadow-color-dark: rgba(0, 0, 0, 0.3); /* Stronger shadow for dark mode contrast */
+    --shadow-color-dark: rgba(0, 0, 0, 0.4); /* Stronger shadow for dark mode contrast */
+    --modal-bg-dark: rgba(44, 44, 46, 0.9);
 
     /* Generic Variables (not theme-dependent) */
     --font-family: 'Inter', 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
     --transition-speed: 0.3s;
-    --blur-strength: 10px;
+    --blur-strength: 15px; /* Increased blur for hero video and modal */
 }
 
 /* Dark theme activation */
@@ -48,9 +50,10 @@ body.dark-theme {
     --navbar-bg: var(--navbar-bg-dark);
     --navbar-border: var(--navbar-border-dark);
     --shadow-color: var(--shadow-color-dark);
+    --modal-bg: var(--modal-bg-dark);
 }
 
-/* Light theme by default */
+/* Light theme by default, this will be set by JS if savedTheme is 'light-theme' */
 body {
     --background-color: var(--background-color-light);
     --text-color: var(--text-color-light);
@@ -62,24 +65,25 @@ body {
     --navbar-bg: var(--navbar-bg-light);
     --navbar-border: var(--navbar-border-light);
     --shadow-color: var(--shadow-color-light);
+    --modal-bg: var(--modal-bg-light);
 
     font-family: var(--font-family);
     line-height: 1.6;
     color: var(--text-color);
     background-color: var(--background-color);
-    transition: background-color var(--transition-speed), color var(--transition-speed);
+    transition: background-color var(--transition-speed) ease-in-out, color var(--transition-speed) ease-in-out;
     scroll-behavior: smooth; /* Smooth scrolling */
 }
 
 a {
     color: var(--primary-color);
     text-decoration: none;
-    transition: color var(--transition-speed);
+    transition: color var(--transition-speed) ease-in-out;
 }
 
 a:hover {
     color: var(--primary-color);
-    filter: brightness(1.2); /* Slightly brighter on hover */
+    filter: brightness(1.1); /* Slightly brighter on hover */
 }
 
 ul {
@@ -104,7 +108,7 @@ ul {
     background-color: var(--navbar-bg);
     border-bottom: 1px solid var(--navbar-border);
     box-shadow: 0 2px 10px var(--shadow-color);
-    transition: background-color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed);
+    transition: background-color var(--transition-speed) ease-in-out, border-color var(--transition-speed) ease-in-out, box-shadow var(--transition-speed) ease-in-out;
 }
 
 .navbar {
@@ -121,7 +125,7 @@ ul {
     font-size: 1.5em;
     color: var(--text-color);
     letter-spacing: -0.02em;
-    transition: color var(--transition-speed);
+    transition: color var(--transition-speed) ease-in-out;
 }
 
 .nav-menu {
@@ -136,7 +140,7 @@ ul {
     font-size: 1.05em;
     padding: 5px 0;
     position: relative;
-    transition: color var(--transition-speed);
+    transition: color var(--transition-speed) ease-in-out;
 }
 
 .nav-link::after {
@@ -250,12 +254,12 @@ ul {
     cursor: pointer;
     color: var(--text-color);
     padding: 0;
-    transition: color var(--transition-speed);
+    transition: color var(--transition-speed) ease-in-out;
 }
 
 .theme-toggle:hover {
     color: var(--primary-color);
-      }
+    }
 /* --- Main Content Layout --- */
 main {
     padding-top: 80px; /* Adjust for fixed header height */
@@ -318,6 +322,8 @@ main {
     z-index: 1;
     transform: translate(-50%, -50%);
     object-fit: cover;
+    filter: blur(5px); /* Added blur to video */
+    transition: filter 1s ease-out; /* Smooth transition for blur (if changed dynamically) */
 }
 
 .hero-overlay {
@@ -328,6 +334,7 @@ main {
     height: 100%;
     background-color: var(--hero-overlay); /* Theme-dependent overlay */
     z-index: 2;
+    transition: background-color var(--transition-speed) ease-in-out;
 }
 
 .hero-content {
@@ -380,7 +387,7 @@ main {
     border-radius: 10px;
     font-size: 1.1em;
     font-weight: 600;
-    transition: transform var(--transition-speed), background-color var(--transition-speed), box-shadow var(--transition-speed);
+    transition: transform var(--transition-speed) ease-in-out, background-color var(--transition-speed) ease-in-out, box-shadow var(--transition-speed) ease-in-out;
     box-shadow: 0 5px 15px rgba(0, 122, 255, 0.3);
 }
 
@@ -392,6 +399,11 @@ main {
 
 .cta-button i {
     margin-left: 10px;
+}
+
+.small-button {
+    padding: 10px 20px;
+    font-size: 1em;
 }
 
 /* --- About Me Section --- */
@@ -499,7 +511,7 @@ main {
     border-radius: 15px;
     box-shadow: 0 5px 20px var(--shadow-color);
     border: 1px solid var(--border-color);
-    transition: background-color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed);
+    transition: background-color var(--transition-speed) ease-in-out, border-color var(--transition-speed) ease-in-out, box-shadow var(--transition-speed) ease-in-out;
 }
 
 .form-note {
@@ -532,7 +544,7 @@ main {
     color: var(--text-color);
     font-family: var(--font-family);
     font-size: 1em;
-    transition: border-color var(--transition-speed), background-color var(--transition-speed), box-shadow var(--transition-speed);
+    transition: border-color var(--transition-speed) ease-in-out, background-color var(--transition-speed) ease-in-out, box-shadow var(--transition-speed) ease-in-out;
 }
 
 .form-group input:focus,
@@ -555,33 +567,67 @@ main {
     font-size: 1.15em;
 }
 
-.form-status-message {
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 8px;
-    text-align: center;
-    font-weight: 500;
+/* --- iOS Style Modal --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Dark translucent background */
+    backdrop-filter: blur(var(--blur-strength)); /* Frosted glass effect */
+    -webkit-backdrop-filter: blur(var(--blur-strength));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* Above everything */
     opacity: 0;
-    height: 0;
-    overflow: hidden;
-    transition: opacity 0.4s ease-out, height 0.4s ease-out, padding 0.4s ease-out;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
-.form-status-message.success {
-    background-color: rgba(40, 167, 69, 0.1);
-    color: #28a745;
+.modal-overlay.show {
     opacity: 1;
-    height: auto;
-    padding: 15px;
+    visibility: visible;
 }
 
-.form-status-message.error {
-    background-color: rgba(220, 53, 69, 0.1);
-    color: #dc3545;
+.modal-content {
+    background-color: var(--modal-bg); /* Theme-dependent modal background */
+    color: var(--text-color);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    max-width: 400px;
+    text-align: center;
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, background-color var(--transition-speed) ease-in-out;
+    border: 1px solid var(--border-color); /* Subtle border for definition */
+}
+
+.modal-overlay.show .modal-content {
+    transform: translateY(0) scale(1);
     opacity: 1;
-    height: auto;
-    padding: 15px;
-  }
+}
+
+.modal-content h3 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.modal-content p {
+    font-size: 1.1em;
+    margin-bottom: 25px;
+    line-height: 1.5;
+    color: var(--secondary-color);
+}
+
+.modal-content .cta-button {
+    width: auto; /* Override 100% width for general cta-button */
+    padding: 10px 25px;
+    font-size: 1em;
+}
 /* --- Skills Section --- */
 .skills-section .skill-category {
     background-color: var(--card-background);
@@ -590,7 +636,7 @@ main {
     margin-bottom: 30px;
     box-shadow: 0 5px 20px var(--shadow-color);
     border: 1px solid var(--border-color);
-    transition: background-color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed);
+    transition: background-color var(--transition-speed) ease-in-out, border-color var(--transition-speed) ease-in-out, box-shadow var(--transition-speed) ease-in-out;
 }
 
 .skills-section .skill-category h3 {
@@ -615,7 +661,7 @@ main {
     border-radius: 10px;
     padding: 20px;
     border: 1px solid var(--border-color);
-    transition: background-color var(--transition-speed), border-color var(--transition-speed);
+    transition: background-color var(--transition-speed) ease-in-out, border-color var(--transition-speed) ease-in-out;
 }
 
 .skill-item:last-child {
@@ -655,7 +701,7 @@ main {
     overflow: hidden;
     margin-bottom: 8px;
     position: relative;
-    transition: background-color var(--transition-speed);
+    transition: background-color var(--transition-speed) ease-in-out;
 }
 
 .skill-progress {
@@ -663,7 +709,7 @@ main {
     background-color: var(--primary-color);
     border-radius: 5px;
     width: 0; /* Initial state for animation */
-    transition: width 1.5s ease-out; /* Animation for width */
+    transition: width 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smoother animation curve */
 }
 
 .skill-level {
@@ -688,7 +734,7 @@ main {
     margin-bottom: 30px;
     box-shadow: 0 5px 20px var(--shadow-color);
     border: 1px solid var(--border-color);
-    transition: transform 0.4s ease, background-color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed);
+    transition: transform 0.4s ease-in-out, background-color var(--transition-speed) ease-in-out, border-color var(--transition-speed) ease-in-out, box-shadow var(--transition-speed) ease-in-out;
     overflow: hidden;
 }
 
@@ -738,26 +784,34 @@ main {
     margin-bottom: 8px;
 }
 
-.project-link {
+.project-card .project-link {
     display: inline-block;
     background-color: var(--primary-color);
     color: #fff;
     padding: 10px 25px;
     border-radius: 8px;
     font-weight: 600;
-    transition: background-color var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+    transition: background-color var(--transition-speed) ease-in-out, transform var(--transition-speed) ease-in-out, box-shadow var(--transition-speed) ease-in-out;
     font-size: 0.95em;
+    margin-top: 15px;
 }
 
-.project-link:hover {
+.project-card .project-link:hover {
     background-color: var(--primary-color);
     transform: translateY(-3px);
     box-shadow: 0 5px 15px rgba(0, 122, 255, 0.3);
 }
 
-.project-link i {
+.project-card .project-link i {
     margin-left: 8px;
     font-size: 0.9em;
+}
+
+.project-card .link-note {
+    font-size: 0.85em;
+    color: var(--secondary-color);
+    margin-top: 10px;
+    margin-bottom: 0;
 }
 
 /* --- Certificates Section --- */
@@ -774,7 +828,7 @@ main {
     box-shadow: 0 5px 20px var(--shadow-color);
     border: 1px solid var(--border-color);
     text-align: center;
-    transition: transform 0.4s ease, background-color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed);
+    transition: transform 0.4s ease-in-out, background-color var(--transition-speed) ease-in-out, border-color var(--transition-speed) ease-in-out, box-shadow var(--transition-speed) ease-in-out;
 }
 
 .certificates-section .certificate-item:hover {
@@ -791,21 +845,50 @@ main {
 .certificate-item h3 {
     font-size: 1.5em;
     font-weight: 600;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     color: var(--text-color);
     line-height: 1.4;
+}
+
+.certificate-item .certificate-issuer,
+.certificate-item .certificate-date {
+    font-size: 0.9em;
+    color: var(--secondary-color);
+    margin-bottom: 5px;
 }
 
 .certificate-item p {
     font-size: 0.95em;
     color: var(--secondary-color);
     line-height: 1.6;
-    margin-bottom: 20px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.certificate-item .certificate-credential {
+    font-size: 0.85em;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+    word-break: break-all; /* Ensure long IDs don't overflow */
 }
 
 .certificate-item .certificate-link {
     font-size: 0.9em;
+    margin-top: 15px;
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-weight: 500;
+    transition: background-color var(--transition-speed) ease-in-out, transform var(--transition-speed) ease-in-out;
 }
+
+.certificate-item .certificate-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 3px 10px rgba(0, 122, 255, 0.2);
+}
+
 
 /* --- Footer --- */
 .footer {
@@ -816,7 +899,7 @@ main {
     color: var(--secondary-color);
     font-size: 0.9em;
     box-shadow: 0 -2px 10px var(--shadow-color);
-    transition: background-color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed);
+    transition: background-color var(--transition-speed) ease-in-out, border-color var(--transition-speed) ease-in-out, box-shadow var(--transition-speed) ease-in-out;
 }
 
 .footer .social-links {
@@ -827,7 +910,7 @@ main {
     color: var(--secondary-color);
     font-size: 1.5em;
     margin: 0 10px;
-    transition: color var(--transition-speed);
+    transition: color var(--transition-speed) ease-in-out;
 }
 
 .footer .social-links a:hover {
