@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spandana Bingi - About Me</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="nav-logo">SPANDANA BINGI</a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link active">About Me</a></li>
+                <li class="nav-item"><a href="skills.html" class="nav-link">Skills</a></li>
+                <li class="nav-item"><a href="projects.html" class="nav-link">Projects</a></li>
+                <li class="nav-item"><a href="certificates.html" class="nav-link">Certificates</a></li>
+                <li class="nav-item theme-toggle-container">
+                    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="page-content">
+        <section class="section about-me-section">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-grid">
+                    <div class="about-summary">
+                        <p>
+                            I am a motivated and detail-oriented B.Tech graduate in Electronics and Communication Engineering with a strong
+                            foundation in Python programming, RESTful API design, database, and web technologies. My expertise lies in frameworks
+                            like Django and FastAPI, complemented by practical knowledge of object-oriented programming (OOP) and unit testing.
+                            I am eager to contribute to dynamic software development teams, building innovative, scalable solutions across
+                            diverse technology stacks. My passion for technology drives me to continuously learn and adapt to new challenges,
+                            ensuring robust and efficient solutions.
+                        </p>
+                    </div>
+                    <div class="about-details">
+                        <h3>Education</h3>
+                        <ul>
+                            <li>
+                                <strong>Samskruti College of Engineering and Technology</strong><br>
+                                Bachelor of Technology in Electronics and Communication Engineering<br>
+                                <small>Nov 2020 - June 2024 | CGPA: 6.66</small>
+                            </li>
+                        </ul>
+
+                        <h3>Interpersonal Skills</h3>
+                        <ul>
+                            <li><i class="fas fa-lightbulb"></i> Problem-Solving & Analytical Thinking</li>
+                            <li><i class="fas fa-comments"></i> Communication & Teamwork</li>
+                            <li><i class="fas fa-exchange-alt"></i> Adaptability & Time Management</li>
+                            <li><i class="fas fa-brain"></i> Eagerness to Learn New Technologies</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section contact-section">
+            <div class="container">
+                <h2 class="section-title">Get in Touch</h2>
+                <p class="contact-intro">I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out!</p>
+                <div class="contact-info">
+                    <p><i class="fas fa-phone-alt"></i> <strong>Phone:</strong> +91 8523047632</p>
+                    <p><i class="fas fa-envelope"></i> <strong>Email:</strong> <a href="mailto:bingispandana21@gmail.com">bingispandana21@gmail.com</a></p>
+                    <p><i class="fab fa-linkedin"></i> <strong>LinkedIn:</strong> <a href="http://linkedin.com/in/spandana-bingi-4353782b6" target="_blank">Spandana Bingi</a></p>
+                </div>
+
+                <form class="contact-form" action="https://formspree.io/f/your_form_id" method="POST" id="contactForm">
+                    <p class="form-note">For direct inquiries, please use the form below.</p>
+                    <div class="form-group">
+                        <label for="name">Your Name:</label>
+                        <input type="text" id="name" name="name" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email:</label>
+                        <input type="email" id="email" name="email" required placeholder="john.doe@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject:</label>
+                        <input type="text" id="subject" name="subject" required placeholder="Project Inquiry / Job Opportunity">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea id="message" name="message" rows="6" required placeholder="Your detailed message..."></textarea>
+                    </div>
+                    <button type="submit" class="cta-button">Send Message <i class="fas fa-paper-plane"></i></button>
+                    <div id="formStatus" class="form-status-message"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 Spandana Bingi. All rights reserved.</p>
+            <div class="social-links">
+                <a href="http://linkedin.com/in/spandana-bingi-4353782b6" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:bingispandana21@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
