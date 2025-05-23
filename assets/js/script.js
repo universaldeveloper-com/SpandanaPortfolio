@@ -2,61 +2,40 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Theme Toggle ---
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
-
-    // Check for saved theme preference or system preference
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    // Set theme: Dark by default if no preference, or if prefersDark, or if savedTheme is dark.
-    // Otherwise, default to light.
     if (savedTheme === 'dark-theme' || (!savedTheme && prefersDark)) {
         body.classList.add('dark-theme');
         updateThemeToggleIcon('dark-theme');
     } else {
-        body.classList.add('light-theme'); // Default to light if no saved preference or prefers light
+        body.classList.add('light-theme');
         updateThemeToggleIcon('light-theme');
     }
 
     themeToggle.addEventListener('click', () => {
-        if (body.classList.contains('dark-theme')) {
-            body.classList.remove('dark-theme');
-            body.classList.add('light-theme');
-            localStorage.setItem('theme', 'light-theme');
-            updateThemeToggleIcon('light-theme');
-        } else {
-            body.classList.remove('light-theme');
-            body.classList.add('dark-theme');
-            localStorage.setItem('theme', 'dark-theme');
-            updateThemeToggleIcon('dark-theme');
-        }
+        body.classList.toggle('dark-theme');
+        body.classList.toggle('light-theme');
+        const newTheme = body.classList.contains('dark-theme') ? 'dark-theme' : 'light-theme';
+        localStorage.setItem('theme', newTheme);
+        updateThemeToggleIcon(newTheme);
     });
 
     function updateThemeToggleIcon(currentTheme) {
-        if (currentTheme === 'dark-theme') {
-            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-            themeToggle.setAttribute('aria-label', 'Switch to light theme');
-        } else {
-            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-            themeToggle.setAttribute('aria-label', 'Switch to dark theme');
-        }
+        themeToggle.innerHTML = currentTheme === 'dark-theme' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        themeToggle.setAttribute('aria-label', currentTheme === 'dark-theme' ? 'Switch to light theme' : 'Switch to dark theme');
     }
 
-    // --- Hamburger Menu Toggle ---
+    // --- Hamburger Menu Toggle (New Animation Logic) ---
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
 
     hamburger.addEventListener('click', () => {
         hamburger.classList.toggle('active');
         navMenu.classList.toggle('active');
-        // Prevent scrolling when mobile menu is open
-        if (navMenu.classList.contains('active')) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
+        document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
     });
 
-    // Close hamburger menu when a nav link is clicked
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
             if (navMenu.classList.contains('active')) {
@@ -67,39 +46,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Skill Progress Bar Animation (for skills.html) ---
+    // --- Skill Progress Bar Animation ---
     const skillProgressBars = document.querySelectorAll('.skill-progress');
-
     const animateSkills = () => {
-        skillProgressBars.forEach(bar => {
-            const level = bar.dataset.level;
-            bar.style.width = level + '%'; // Animate width based on data-level
-        });
+        skillProgressBars.forEach(bar => bar.style.width = bar.dataset.level + '%');
     };
 
-    // Trigger skill animation only on the skills page
     if (window.location.pathname.includes('skills.html')) {
-        const observer = new IntersectionObserver((entries, observer) => {
+        const skillsObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     animateSkills();
-                    observer.disconnect(); // Stop observing once animated
+                    observer.unobserve(entry.target);
                 }
             });
-        }, {
-            threshold: 0.5 // Trigger when 50% of the element is visible
-        });
-
+        }, { threshold: 0.3 });
         const skillsSection = document.querySelector('.skills-section');
-        if (skillsSection) {
-            observer.observe(skillsSection);
-        } else {
-            // Fallback for immediate animation if observer isn't suitable (e.g., section already in view on load)
-            animateSkills();
-        }
+        if (skillsSection) skillsObserver.observe(skillsSection); else animateSkills();
     }
 
-    // --- iOS Style Modal for Form Submission Status (for about.html) ---
+    // --- iOS Style Modal for Form Submission ---
     const statusModal = document.getElementById('statusModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalMessage = document.getElementById('modalMessage');
@@ -107,73 +73,70 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contactForm');
 
     function showModal(title, message, isError = false) {
+        if (!statusModal) return; // Guard clause
         modalTitle.textContent = title;
-        modalMessage.innerHTML = message; // Use innerHTML for potential links
+        modalMessage.innerHTML = message;
         statusModal.classList.add('show');
-        if (isError) {
-            modalTitle.style.color = '#dc3545'; // Error red
-        } else {
-            modalTitle.style.color = 'var(--primary-color)'; // Primary blue for success
-        }
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
+        modalTitle.style.color = isError ? '#dc3545' : 'var(--primary-color)';
+        document.body.style.overflow = 'hidden';
     }
 
     function hideModal() {
+        if (!statusModal) return; // Guard clause
         statusModal.classList.remove('show');
-        document.body.style.overflow = ''; // Re-enable scrolling
-        modalTitle.style.color = ''; // Reset color
+        document.body.style.overflow = '';
+        modalTitle.style.color = '';
     }
 
     if (modalClose) {
         modalClose.addEventListener('click', hideModal);
-        statusModal.addEventListener('click', (e) => {
-            if (e.target === statusModal) { // Close if clicked outside content
-                hideModal();
-            }
-        });
+        statusModal.addEventListener('click', (e) => { if (e.target === statusModal) hideModal(); });
     }
 
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-
-            // Optional: Show a "Sending..." message before fetch
-            showModal("Sending Message...", "Please wait while your message is being sent.", false); // Not an error, just sending
-
+            showModal("Sending...", "Please wait while your message is being processed.", false);
             const formData = new FormData(contactForm);
             try {
                 const response = await fetch(contactForm.action, {
-                    method: contactForm.method,
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
+                    method: contactForm.method, body: formData, headers: { 'Accept': 'application/json' }
                 });
-
                 if (response.ok) {
-                    showModal("Message Sent!", "Thank you for your message, Spandana! I have received your inquiry and will get back to you shortly.", false);
-                    contactForm.reset(); // Clear the form
+                    showModal("Message Sent!", "Thank you for reaching out! Your message has been sent successfully.", false);
+                    contactForm.reset();
                 } else {
-                    let errorMessage = "Unfortunately, there was a problem sending your message via the form.";
-                    errorMessage += "<br><br>Please consider sending an email directly to <a href='mailto:bingispandana21@gmail.com'>bingispandana21@gmail.com</a>. We apologize for the inconvenience.";
-                    showModal("Message Failed to Send", errorMessage, true);
+                    showModal("Message Failed", "Thank you for reaching out! Unfortunately, there was a problem sending your message. <br><br>Please try sending an email directly to <a href='mailto:bingispandana21@gmail.com'>bingispandana21@gmail.com</a>.", true);
                 }
             } catch (error) {
-                let errorMessage = "An error occurred: " + error.message + ".";
-                errorMessage += "<br><br>Please consider sending an email directly to <a href='mailto:bingispandana21@gmail.com'>bingispandana21@gmail.com</a>. We apologize for the inconvenience.";
-                showModal("Message Failed to Send", errorMessage, true);
+                showModal("Error", "An unexpected error occurred. <br><br>Please try sending an email directly to <a href='mailto:bingispandana21@gmail.com'>bingispandana21@gmail.com</a>.", true);
             }
         });
     }
 
     // --- Active Nav Link Highlight ---
-    const currentPath = window.location.pathname.split('/').pop();
+    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
     document.querySelectorAll('.nav-link').forEach(link => {
-        if (link.getAttribute('href') === currentPath || (currentPath === '' && link.getAttribute('href') === 'index.html')) {
-            link.classList.add('active');
-        } else {
-            link.classList.remove('active');
-        }
+        link.classList.toggle('active', link.getAttribute('href') === currentPath);
     });
+
+    // --- Scroll Animations for elements ---
+    const scrollElements = document.querySelectorAll('.animate-on-scroll');
+    const elementObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                // Add staggered delay based on index if needed, or use data-attributes
+                // For simplicity, just add a class. CSS can handle staggered delays if items have delay classes.
+                entry.target.classList.add('is-visible');
+                // Optional: Add delay classes dynamically if elements are in a list
+                // if (entry.target.parentElement.classList.contains('certificate-list') || entry.target.parentElement.classList.contains('about-content-wrapper')) {
+                //     entry.target.style.transitionDelay = `${index * 0.1}s`;
+                // }
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 }); // Trigger when 15% of the element is visible
+
+    scrollElements.forEach(el => elementObserver.observe(el));
 
 });
