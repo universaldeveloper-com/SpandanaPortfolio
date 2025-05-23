@@ -7,14 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    if (savedTheme) {
-        body.classList.add(savedTheme);
-        updateThemeToggleIcon(savedTheme);
-    } else if (prefersDark) {
+    // Set theme: Dark by default if no preference, or if prefersDark, or if savedTheme is dark.
+    // Otherwise, default to light.
+    if (savedTheme === 'dark-theme' || (!savedTheme && prefersDark)) {
         body.classList.add('dark-theme');
         updateThemeToggleIcon('dark-theme');
     } else {
-        body.classList.add('light-theme'); // Default to light if no preference
+        body.classList.add('light-theme'); // Default to light if no saved preference or prefers light
         updateThemeToggleIcon('light-theme');
     }
 
@@ -80,7 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Trigger skill animation only on the skills page
     if (window.location.pathname.includes('skills.html')) {
-        // Use Intersection Observer for animation when element enters viewport
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -96,21 +94,51 @@ document.addEventListener('DOMContentLoaded', () => {
         if (skillsSection) {
             observer.observe(skillsSection);
         } else {
-            // Fallback: if IntersectionObserver not supported or section not found
+            // Fallback for immediate animation if observer isn't suitable (e.g., section already in view on load)
             animateSkills();
         }
     }
 
-    // --- Contact Form Submission (for about.html) ---
+    // --- iOS Style Modal for Form Submission Status (for about.html) ---
+    const statusModal = document.getElementById('statusModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMessage = document.getElementById('modalMessage');
+    const modalClose = document.getElementById('modalClose');
     const contactForm = document.getElementById('contactForm');
-    const formStatus = document.getElementById('formStatus');
+
+    function showModal(title, message, isError = false) {
+        modalTitle.textContent = title;
+        modalMessage.innerHTML = message; // Use innerHTML for potential links
+        statusModal.classList.add('show');
+        if (isError) {
+            modalTitle.style.color = '#dc3545'; // Error red
+        } else {
+            modalTitle.style.color = 'var(--primary-color)'; // Primary blue for success
+        }
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
+
+    function hideModal() {
+        statusModal.classList.remove('show');
+        document.body.style.overflow = ''; // Re-enable scrolling
+        modalTitle.style.color = ''; // Reset color
+    }
+
+    if (modalClose) {
+        modalClose.addEventListener('click', hideModal);
+        statusModal.addEventListener('click', (e) => {
+            if (e.target === statusModal) { // Close if clicked outside content
+                hideModal();
+            }
+        });
+    }
 
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            formStatus.textContent = 'Sending...';
-            formStatus.className = 'form-status-message'; // Reset classes
+            // Optional: Show a "Sending..." message before fetch
+            showModal("Sending Message...", "Please wait while your message is being sent.", false); // Not an error, just sending
 
             const formData = new FormData(contactForm);
             try {
@@ -123,21 +151,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (response.ok) {
-                    formStatus.textContent = 'Message sent successfully!';
-                    formStatus.classList.add('success');
+                    showModal("Message Sent!", "Thank you for your message, Spandana! I have received your inquiry and will get back to you shortly.", false);
                     contactForm.reset(); // Clear the form
                 } else {
-                    const data = await response.json();
-                    if (Object.hasOwnProperty.call(data, 'errors')) {
-                        formStatus.textContent = data.errors.map(error => error.message).join(', ');
-                    } else {
-                        formStatus.textContent = 'Oops! There was a problem sending your message.';
-                    }
-                    formStatus.classList.add('error');
+                    let errorMessage = "Unfortunately, there was a problem sending your message via the form.";
+                    errorMessage += "<br><br>Please consider sending an email directly to <a href='mailto:bingispandana21@gmail.com'>bingispandana21@gmail.com</a>. We apologize for the inconvenience.";
+                    showModal("Message Failed to Send", errorMessage, true);
                 }
             } catch (error) {
-                formStatus.textContent = 'An error occurred: ' + error.message;
-                formStatus.classList.add('error');
+                let errorMessage = "An error occurred: " + error.message + ".";
+                errorMessage += "<br><br>Please consider sending an email directly to <a href='mailto:bingispandana21@gmail.com'>bingispandana21@gmail.com</a>. We apologize for the inconvenience.";
+                showModal("Message Failed to Send", errorMessage, true);
             }
         });
     }
