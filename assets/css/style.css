@@ -16,10 +16,10 @@
     --hero-overlay-light: rgba(240, 240, 245, 0.65);
     --navbar-bg-light: rgba(255, 255, 255, 0.75);
     --navbar-border-light: rgba(60, 60, 67, 0.29);
-    --shadow-color-light: rgba(0, 0, 0, 0.07); /* Softer shadow */
+    --shadow-color-light: rgba(0, 0, 0, 0.07);
     --modal-bg-light: rgba(255, 255, 255, 0.85);
     --input-bg-light: #f9f9f9;
-    --skill-bar-bg-light: rgba(0, 122, 255, 0.15); /* Lighter skill bar background */
+    --skill-bar-bg-light: rgba(0, 122, 255, 0.15);
 
     /* Dark Theme Colors */
     --background-color-dark: #161618;
@@ -34,7 +34,7 @@
     --shadow-color-dark: rgba(0, 0, 0, 0.35);
     --modal-bg-dark: rgba(44, 44, 46, 0.85);
     --input-bg-dark: #232325;
-    --skill-bar-bg-dark: rgba(10, 132, 255, 0.15); /* Lighter skill bar background for dark */
+    --skill-bar-bg-dark: rgba(10, 132, 255, 0.15);
 
     /* Generic Variables */
     --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -45,7 +45,7 @@
 
     /* Responsive Typography */
     --text-sm: clamp(0.8rem, 0.4vw + 0.7rem, 0.95rem);
-    --text-base: clamp(0.95rem, 0.5vw + 0.8rem, 1.1rem); /* Adjusted base */
+    --text-base: clamp(0.95rem, 0.5vw + 0.8rem, 1.1rem);
     --text-md: clamp(1.1rem, 0.8vw + 0.85rem, 1.3rem);
     --text-lg: clamp(1.4rem, 1.5vw + 1rem, 2rem);
     --text-xl: clamp(1.8rem, 2.5vw + 1rem, 3rem);
@@ -95,7 +95,7 @@ body {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden; /* Prevent horizontal scroll from animations */
+    overflow-x: hidden;
 }
 
 a { color: var(--primary-color); text-decoration: none; transition: color var(--transition-speed) var(--transition-cubic); }
@@ -168,10 +168,10 @@ h1, h2, h3, h4, h5, h6 { font-weight: 700; color: var(--text-color); letter-spac
     .nav-link { font-size: 1.5em; padding: 15px; opacity: 1; }
     .hamburger { display: flex; flex-direction: column; align-items: center; justify-content: center; }
     .nav-logo { position: relative; z-index: 1003; }
-}
+    }
 /* === MAIN CONTENT & SECTIONS === */
-main { padding-top: 70px; min-height: calc(100vh - 70px); } /* Nav height approx 60-70px */
-.page-content { padding-top: 90px; } /* More space for page titles */
+main { padding-top: 70px; min-height: calc(100vh - 70px); }
+.page-content { padding-top: 90px; }
 .section { padding: 50px 0; position: relative; }
 .section-title { text-align: center; margin-bottom: 40px; }
 .section-title::after { content: ''; display: block; width: 50px; height: 3px; background-color: var(--primary-color); margin: 10px auto 0; border-radius: 1.5px; }
@@ -303,25 +303,89 @@ main { padding-top: 70px; min-height: calc(100vh - 70px); } /* Nav height approx
 #certificateModalImage {
     display: block; max-width: 100%; max-height: calc(90vh - 100px);
     object-fit: contain; margin: 0 auto; border-radius: 8px;
-}
+        }
 /* === SKILLS SECTION === */
-.skills-section .skill-category { padding: 30px; margin-bottom: 25px; } /* More padding for desktop */
-.skills-section .skill-category h3 { margin-bottom: 25px; }
-.skill-item { background-color: transparent; border: none; padding: 0; margin-bottom: 25px; }
-.skill-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-.skill-name { font-weight: 600; font-size: var(--text-base); margin-bottom: 0; }
-.skill-level-text { font-weight: 500; font-size: var(--text-sm); color: var(--primary-color); }
-.skill-bar-container { height: 12px; background-color: var(--skill-bar-bg); border-radius: 6px; overflow: hidden; position: relative; box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); }
+.skills-section .skill-category {
+    background-color: var(--card-background); border-radius: var(--card-corner-radius);
+    padding: 30px; margin-bottom: 25px; box-shadow: 0 4px 15px var(--shadow-color);
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s var(--transition-cubic), box-shadow 0.3s var(--transition-cubic);
+}
+.skills-section .skill-category:hover { transform: translateY(-5px); box-shadow: 0 7px 22px var(--shadow-color); }
+.skills-section .skill-category h3 {
+    margin-bottom: 25px; color: var(--text-color); font-weight: 600;
+    display: flex; align-items: center; letter-spacing: -0.02em;
+}
+.skills-section .skill-category h3 i { color: var(--primary-color); margin-right: 12px; font-size: 1.05em; }
+
+.skill-item {
+    background-color: transparent; border: none; padding: 0;
+    margin-bottom: 25px; /* Space between individual skills */
+}
+.skill-item:last-child { margin-bottom: 0; } /* No margin for the last skill in a category */
+
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline; /* Align baseline of text for better visual flow */
+    margin-bottom: 8px;
+}
+.skill-name {
+    font-weight: 500; /* Slightly less bold for iOS feel */
+    font-size: var(--text-base);
+    color: var(--text-color);
+    margin-bottom: 0;
+    flex-grow: 1; /* Allow skill name to take available space */
+    margin-right: 15px; /* Space between name and percentage */
+}
+.skill-level-text {
+    font-weight: 600; /* Bolder percentage */
+    font-size: var(--text-sm);
+    color: var(--primary-color);
+    white-space: nowrap; /* Prevent percentage from wrapping */
+}
+.skill-bar-container {
+    height: 10px; /* Slightly slimmer for a sleeker look */
+    background-color: var(--skill-bar-bg); /* Use the theme variable */
+    border-radius: 5px; /* Rounded ends for the container */
+    overflow: hidden;
+    position: relative;
+}
 .skill-progress {
-    height: 100%; background: var(--primary-color); border-radius: 6px; width: 0;
-    transition: width 2s var(--transition-cubic); position: relative;
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: 5px; /* Match container's rounding */
+    width: 0;
+    transition: width 1.8s var(--transition-cubic);
+    position: relative;
 }
-.skill-progress::after {
-    content: ''; position: absolute; top: 1px; left: 2px; right: 2px; height: 3px;
-    background: rgba(255,255,255,0.2); border-radius: 3px;
+.skill-description {
+    font-size: var(--text-sm);
+    color: var(--secondary-color);
+    line-height: 1.6;
+    margin-top: 12px;
 }
-.skill-description { font-size: var(--text-sm); color: var(--secondary-color); line-height: 1.6; margin-top: 10px; }
-.skill-item-text-only p { font-size: var(--text-base); }
+
+/* Styles for text-only skills (like "Other Technical Skills" and "Tools") */
+.skill-item-text-only p {
+    margin-bottom: 10px;
+    font-size: var(--text-base);
+    display: flex;
+    align-items: flex-start; /* Align items to the top for multi-line text */
+    color: var(--text-color);
+    line-height: 1.6;
+}
+.skill-item-text-only p i.list-icon { /* Target the icons specifically */
+    color: var(--primary-color);
+    margin-right: 12px; /* Space between icon and text */
+    font-size: 1.1em;  /* Slightly larger icon for clarity */
+    line-height: 1.6; /* Match parent's line height to help vertical alignment */
+    width: 22px;      /* Give icon a fixed width to prevent text jump */
+    text-align: center; /* Center icon within its allocated width */
+    flex-shrink: 0;   /* Prevent icon from shrinking if text is long */
+    margin-top: 0.1em; /* Slight adjustment for better vertical alignment with text */
+}
+
 
 /* === PROJECTS SECTION === */
 .projects-section .project-card {
@@ -413,12 +477,12 @@ main { padding-top: 70px; min-height: calc(100vh - 70px); } /* Nav height approx
     .certificate-list { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
 }
 
-/* Mobile-specific overrides (already present in some sections, consolidating here) */
+/* Mobile-specific overrides */
 @media (max-width: 576px) {
     main {padding-top: 65px;}
     .page-content { padding-top: 80px; }
-    .hero-content h1 { font-size: var(--text-xl); } /* Uses clamp, so should adapt */
-    .section-title { font-size: var(--text-lg); margin-bottom: 30px; }
+    /* .hero-content h1 { font-size: var(--text-xl); }  Already handled by clamp */
+    /* .section-title { font-size: var(--text-lg); margin-bottom: 30px; } Already handled by clamp */
     .about-card { padding: 20px; }
     .contact-form { padding: 25px; }
     .skills-section .skill-category { padding: 20px; }
@@ -427,4 +491,4 @@ main { padding-top: 70px; min-height: calc(100vh - 70px); } /* Nav height approx
     .certificate-modal-content { padding: 15px; }
     .certificate-modal-title { font-size: var(--text-base); padding-right: 35px; }
     .certificate-modal-close { top:10px; right:10px; width:30px; height:30px; font-size:1.5em;}
-    }
+        }
