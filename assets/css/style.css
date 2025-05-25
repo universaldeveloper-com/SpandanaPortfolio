@@ -1,4 +1,4 @@
-/* --- CSS Reset & Base Styles --- */
+/* === CSS RESET & BASE STYLES === */
 *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -6,396 +6,425 @@
 }
 
 :root {
-    /* ... (Keep existing color variables, add if needed) ... */
+    /* Light Theme Colors */
+    --background-color-light: #f0f0f5;
+    --text-color-light: #1d1d1f;
+    --primary-color-light: #007aff;
+    --secondary-color-light: #6e6e73;
+    --card-background-light: #ffffff;
+    --border-color-light: #d1d1d6;
+    --hero-overlay-light: rgba(240, 240, 245, 0.65);
+    --navbar-bg-light: rgba(255, 255, 255, 0.75);
+    --navbar-border-light: rgba(60, 60, 67, 0.29);
+    --shadow-color-light: rgba(0, 0, 0, 0.07); /* Softer shadow */
+    --modal-bg-light: rgba(255, 255, 255, 0.85);
+    --input-bg-light: #f9f9f9;
+    --skill-bar-bg-light: rgba(0, 122, 255, 0.15); /* Lighter skill bar background */
+
+    /* Dark Theme Colors */
+    --background-color-dark: #161618;
+    --text-color-dark: #e8e8ed;
+    --primary-color-dark: #0a84ff;
+    --secondary-color-dark: #98989e;
+    --card-background-dark: #1c1c1e;
+    --border-color-dark: #3a3a3c;
+    --hero-overlay-dark: rgba(22, 22, 24, 0.65);
+    --navbar-bg-dark: rgba(28, 28, 30, 0.75);
+    --navbar-border-dark: rgba(84, 84, 88, 0.65);
+    --shadow-color-dark: rgba(0, 0, 0, 0.35);
+    --modal-bg-dark: rgba(44, 44, 46, 0.85);
+    --input-bg-dark: #232325;
+    --skill-bar-bg-dark: rgba(10, 132, 255, 0.15); /* Lighter skill bar background for dark */
+
+    /* Generic Variables */
     --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     --transition-speed: 0.35s;
     --transition-cubic: cubic-bezier(0.65, 0.05, 0.36, 1);
     --blur-strength: 18px;
-    --card-corner-radius: 14px; /* Slightly more rounded for modern iOS */
+    --card-corner-radius: 14px;
 
-    /* Responsive Typography Base */
-    --font-size-base: 1rem; /* approx 16px on most browsers */
-    --font-scale-ratio: 1.2; /* Adjust for how much larger headings get */
+    /* Responsive Typography */
+    --text-sm: clamp(0.8rem, 0.4vw + 0.7rem, 0.95rem);
+    --text-base: clamp(0.95rem, 0.5vw + 0.8rem, 1.1rem); /* Adjusted base */
+    --text-md: clamp(1.1rem, 0.8vw + 0.85rem, 1.3rem);
+    --text-lg: clamp(1.4rem, 1.5vw + 1rem, 2rem);
+    --text-xl: clamp(1.8rem, 2.5vw + 1rem, 3rem);
 
-    /* Specific Text Sizes (using clamp for fluidity) */
-    --text-sm: clamp(0.8rem, 0.5vw + 0.7rem, 0.95rem);    /* Small text, captions */
-    --text-base: clamp(1rem, 1vw + 0.75rem, 1.125rem);    /* Body text */
-    --text-md: clamp(1.125rem, 1.2vw + 0.8rem, 1.3rem);  /* Subheadings, larger body */
-    --text-lg: clamp(1.5rem, 2vw + 1rem, 2.25rem);      /* Section titles (mobile to medium) */
-    --text-xl: clamp(2rem, 3vw + 1rem, 3.5rem);        /* Hero title (mobile to medium) */
+    --text-lg-desktop: clamp(1.8rem, 2vw + 1rem, 2.6rem);
+    --text-xl-desktop: clamp(2.5rem, 3vw + 1rem, 4rem);
+}
 
-    /* Desktop Specific Text Sizes (override with media queries if needed) */
-    --text-lg-desktop: clamp(2rem, 2.2vw + 1rem, 2.8rem); /* Section titles desktop */
-    --text-xl-desktop: clamp(3rem, 3.5vw + 1rem, 4.5rem); /* Hero title desktop */
+/* Apply theme variables */
+body.dark-theme {
+    --background-color: var(--background-color-dark);
+    --text-color: var(--text-color-dark);
+    --primary-color: var(--primary-color-dark);
+    --secondary-color: var(--secondary-color-dark);
+    --card-background: var(--card-background-dark);
+    --border-color: var(--border-color-dark);
+    --hero-overlay: var(--hero-overlay-dark);
+    --navbar-bg: var(--navbar-bg-dark);
+    --navbar-border: var(--navbar-border-dark);
+    --shadow-color: var(--shadow-color-dark);
+    --modal-bg: var(--modal-bg-dark);
+    --input-bg: var(--input-bg-dark);
+    --skill-bar-bg: var(--skill-bar-bg-dark);
 }
 
 body {
-    /* ... (existing body styles) ... */
-    font-size: var(--text-base); /* Apply base responsive font size */
-    line-height: 1.7; /* More generous line height for readability */
-}
+    --background-color: var(--background-color-light);
+    --text-color: var(--text-color-light);
+    --primary-color: var(--primary-color-light);
+    --secondary-color: var(--secondary-color-light);
+    --card-background: var(--card-background-light);
+    --border-color: var(--border-color-light);
+    --hero-overlay: var(--hero-overlay-light);
+    --navbar-bg: var(--navbar-bg-light);
+    --navbar-border: var(--navbar-border-light);
+    --shadow-color: var(--shadow-color-light);
+    --modal-bg: var(--modal-bg-light);
+    --input-bg: var(--input-bg-light);
+    --skill-bar-bg: var(--skill-bar-bg-light);
 
-h1, h2, h3, h4, h5, h6 {
-    font-weight: 700;
+    font-family: var(--font-family);
+    font-size: var(--text-base);
+    line-height: 1.7;
     color: var(--text-color);
-    letter-spacing: -0.025em; /* Consistent tighter letter spacing for headings */
-    line-height: 1.3;
+    background-color: var(--background-color);
+    transition: background-color var(--transition-speed) var(--transition-cubic), color var(--transition-speed) var(--transition-cubic);
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden; /* Prevent horizontal scroll from animations */
 }
 
-/* Responsive Heading Sizes */
+a { color: var(--primary-color); text-decoration: none; transition: color var(--transition-speed) var(--transition-cubic); }
+a:hover { color: var(--primary-color); filter: brightness(1.15); }
+ul { list-style: none; }
+
+h1, h2, h3, h4, h5, h6 { font-weight: 700; color: var(--text-color); letter-spacing: -0.025em; line-height: 1.3; }
 .hero-content h1 { font-size: var(--text-xl); }
 .section-title { font-size: var(--text-lg); }
 .project-card h3, .skill-category h3, .about-card h3, .certificate-item h3 { font-size: var(--text-md); }
 
+.container { width: 90%; max-width: 1100px; margin: 0 auto; padding: 0 15px; }
 
-.container {
-    width: 90%; /* Use percentage for better fluidity */
-    max-width: 1100px; /* Default max-width for medium screens */
-    margin: 0 auto;
-    padding: 0 15px; /* Slightly reduced padding */
+/* === HEADER & NAVIGATION === */
+.header {
+    width: 100%; position: fixed; top: 0; left: 0; z-index: 1000;
+    backdrop-filter: blur(var(--blur-strength)); -webkit-backdrop-filter: blur(var(--blur-strength));
+    background-color: var(--navbar-bg); border-bottom: 1px solid var(--navbar-border);
+    box-shadow: 0 1px 3px var(--shadow-color);
+    transition: background-color var(--transition-speed) var(--transition-cubic), border-color var(--transition-speed) var(--transition-cubic), box-shadow var(--transition-speed) var(--transition-cubic);
+}
+.navbar { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; max-width: 1100px; margin: 0 auto; }
+.nav-logo { font-weight: 700; font-size: clamp(1.4em, 2.5vw, 1.6em); color: var(--text-color); letter-spacing: -0.03em; transition: color var(--transition-speed) var(--transition-cubic); }
+.nav-menu { display: flex; gap: 25px; align-items: center; }
+.nav-link {
+    color: var(--text-color); font-weight: 500; font-size: clamp(0.9em, 1.5vw, 1em); padding: 8px 4px;
+    position: relative; transition: color var(--transition-speed) var(--transition-cubic); opacity: 0.85;
+}
+.nav-link:hover { opacity: 1; color: var(--primary-color); }
+.nav-link.active { color: var(--primary-color); font-weight: 600; opacity: 1; }
+.nav-link::after {
+    content: ''; position: absolute; left: 50%; bottom: 0; width: 0; height: 2px;
+    background-color: var(--primary-color); border-radius: 1px; transform: translateX(-50%);
+    transition: width var(--transition-speed) var(--transition-cubic);
+}
+.nav-link:hover::after, .nav-link.active::after { width: 20px; }
+.theme-toggle {
+    background: var(--input-bg); border: 1px solid var(--border-color); font-size: 1.2em; cursor: pointer;
+    color: var(--text-color); padding: 8px; border-radius: 8px;
+    transition: background-color var(--transition-speed) var(--transition-cubic), color var(--transition-speed) var(--transition-cubic), border-color var(--transition-speed) var(--transition-cubic), transform 0.2s ease-out;
+    display: flex; align-items: center; justify-content: center;
+}
+.theme-toggle:hover { background-color: var(--border-color); transform: scale(1.05); }
+.theme-toggle:active { transform: scale(0.95); }
+
+.hamburger { display: none; cursor: pointer; z-index: 1002; padding: 8px; }
+.hamburger .bar { display: block; width: 22px; height: 2px; background-color: var(--text-color); transition: all 0.4s var(--transition-cubic); border-radius: 1px; margin: 5px 0; }
+.hamburger.active .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.active .bar:nth-child(2) { opacity: 0; transform: translateX(-10px); }
+.hamburger.active .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+@media (max-width: 768px) {
+    .nav-menu {
+        position: fixed; left: 0; top: 0; width: 100%; height: 100vh; flex-direction: column;
+        justify-content: center; align-items: center; gap: 10px; background-color: var(--navbar-bg);
+        backdrop-filter: blur(calc(var(--blur-strength) + 5px)); -webkit-backdrop-filter: blur(calc(var(--blur-strength) + 5px));
+        opacity: 0; visibility: hidden; transform: scale(1.1);
+        transition: opacity 0.4s var(--transition-cubic), visibility 0.4s var(--transition-cubic), transform 0.4s var(--transition-cubic);
+        z-index: 1001;
+    }
+    .nav-menu.active { opacity: 1; visibility: visible; transform: scale(1); }
+    .nav-item { opacity: 0; transform: translateY(30px); transition: opacity 0.5s var(--transition-cubic), transform 0.5s var(--transition-cubic); }
+    .nav-menu.active .nav-item { opacity: 1; transform: translateY(0); }
+    .nav-menu.active .nav-item:nth-child(1) { transition-delay: 0.1s; }
+    .nav-menu.active .nav-item:nth-child(2) { transition-delay: 0.15s; }
+    .nav-menu.active .nav-item:nth-child(3) { transition-delay: 0.2s; }
+    .nav-menu.active .nav-item:nth-child(4) { transition-delay: 0.25s; }
+    .nav-menu.active .nav-item:nth-child(5) { transition-delay: 0.3s; }
+    .nav-menu.active .nav-item:nth-child(6) { transition-delay: 0.35s; }
+    .nav-link { font-size: 1.5em; padding: 15px; opacity: 1; }
+    .hamburger { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .nav-logo { position: relative; z-index: 1003; }
+}
+/* === MAIN CONTENT & SECTIONS === */
+main { padding-top: 70px; min-height: calc(100vh - 70px); } /* Nav height approx 60-70px */
+.page-content { padding-top: 90px; } /* More space for page titles */
+.section { padding: 50px 0; position: relative; }
+.section-title { text-align: center; margin-bottom: 40px; }
+.section-title::after { content: ''; display: block; width: 50px; height: 3px; background-color: var(--primary-color); margin: 10px auto 0; border-radius: 1.5px; }
+
+/* === HERO SECTION === */
+.hero-section {
+    height: 100vh; display: flex; justify-content: center; align-items: center;
+    position: relative; color: #fff; text-align: center; overflow: hidden; padding-top: 0;
+}
+.hero-video {
+    position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%;
+    width: auto; height: auto; z-index: 1; transform: translate(-50%, -50%);
+    object-fit: cover; filter: blur(8px) brightness(0.85);
+    transition: filter 1s var(--transition-cubic);
+}
+.hero-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: var(--hero-overlay); z-index: 2;
+    transition: background-color var(--transition-speed) var(--transition-cubic);
+}
+.hero-content { position: relative; z-index: 3; max-width: 750px; padding: 20px; animation: fadeInScale 1s 0.2s var(--transition-cubic) forwards; }
+.hero-headshot {
+    width: clamp(120px, 15vw, 140px); height: clamp(120px, 15vw, 140px); border-radius: 50%; overflow: hidden;
+    margin: 0 auto 25px; border: 3px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+}
+.hero-headshot img { width: 100%; height: 100%; object-fit: cover; }
+.hero-description { font-size: var(--text-base); line-height: 1.75; margin-bottom: 35px; font-weight: 400; max-width: 650px; margin-left: auto; margin-right: auto; }
+.cta-button {
+    display: inline-flex; align-items: center; justify-content: center;
+    padding: 14px 30px; background: linear-gradient(145deg, var(--primary-color), color-mix(in srgb, var(--primary-color) 80%, black));
+    color: #fff; border-radius: var(--card-corner-radius); font-size: clamp(1em, 1.8vw, 1.05em); font-weight: 600;
+    transition: transform 0.25s var(--transition-cubic), box-shadow 0.25s var(--transition-cubic), background 0.25s var(--transition-cubic);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--primary-color) 40%, transparent); border: none;
+}
+.cta-button:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 7px 20px color-mix(in srgb, var(--primary-color) 50%, transparent); }
+.cta-button:active { transform: translateY(-1px) scale(0.98); box-shadow: 0 2px 8px color-mix(in srgb, var(--primary-color) 30%, transparent); }
+.cta-button i { margin-left: 10px; transition: transform 0.25s var(--transition-cubic); }
+.cta-button:hover i { transform: translateX(3px); }
+.small-button { padding: 10px 20px; font-size: clamp(0.9em, 1.5vw, 0.95em); }
+
+/* === ABOUT ME SECTION === */
+.about-me-section { background-color: transparent; }
+.about-content-wrapper { display: grid; grid-template-columns: 1fr; gap: 30px; }
+.about-card {
+    background-color: var(--card-background); padding: 30px; border-radius: var(--card-corner-radius);
+    box-shadow: 0 4px 15px var(--shadow-color); border: 1px solid var(--border-color);
+    transition: transform 0.3s var(--transition-cubic), box-shadow 0.3s var(--transition-cubic);
+}
+.about-card:hover { transform: translateY(-6px); box-shadow: 0 8px 25px var(--shadow-color); }
+.about-card h3 { display: flex; align-items: center; margin-bottom: 20px; }
+.about-card .icon-large { font-size: 2em; color: var(--primary-color); margin-right: 15px; margin-bottom: 0; }
+.about-card p { font-size: var(--text-base); line-height: 1.7; margin-bottom: 15px; }
+.about-card ul { padding-left: 5px; }
+.about-card ul li { font-size: var(--text-base); margin-bottom: 12px; display: flex; align-items: center; }
+.about-card .list-icon { color: var(--primary-color); margin-right: 12px; font-size: 1.1em; width: 20px; text-align: center; }
+.about-card small { display: block; margin-top: 5px; color: var(--secondary-color); font-size: var(--text-sm); }
+
+/* === CONTACT SECTION === */
+.contact-section { background-color: var(--background-color); }
+.contact-intro { text-align: center; font-size: var(--text-base); margin-bottom: 30px; color: var(--secondary-color); max-width: 600px; margin-left: auto; margin-right: auto; }
+.contact-info { text-align: center; margin-bottom: 40px; font-size: var(--text-base); }
+.contact-info p { margin-bottom: 12px; display: flex; align-items: center; justify-content: center; }
+.contact-info p i { color: var(--primary-color); margin-right: 12px; font-size: 1.2em; width: 20px; text-align: center; }
+.contact-info a { font-weight: 500; }
+.contact-form {
+    max-width: 600px; margin: 0 auto; background-color: var(--card-background);
+    padding: 35px; border-radius: var(--card-corner-radius); box-shadow: 0 4px 15px var(--shadow-color);
+    border: 1px solid var(--border-color);
+}
+.form-note { text-align: center; margin-bottom: 25px; color: var(--secondary-color); font-size: var(--text-sm); }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-weight: 500; margin-bottom: 8px; font-size: var(--text-base); }
+.form-group input[type="text"], .form-group input[type="email"], .form-group textarea {
+    width: 100%; padding: 14px; border: 1px solid var(--border-color); border-radius: 8px;
+    background-color: var(--input-bg); color: var(--text-color); font-family: var(--font-family); font-size: 1em;
+    transition: border-color var(--transition-speed) var(--transition-cubic), background-color var(--transition-speed) var(--transition-cubic), box-shadow var(--transition-speed) var(--transition-cubic);
+}
+.form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color) 20%, transparent); }
+.form-group textarea { resize: vertical; min-height: 110px; }
+.contact-form .cta-button { width: 100%; padding: 14px 20px; font-size: 1.1em; }
+
+/* === iOS Style CONTACT Modal === */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(calc(var(--blur-strength) - 5px)); -webkit-backdrop-filter: blur(calc(var(--blur-strength) - 5px));
+    display: flex; justify-content: center; align-items: center; z-index: 10000; opacity: 0; visibility: hidden;
+    transition: opacity 0.3s var(--transition-cubic), visibility 0.3s var(--transition-cubic);
+}
+.modal-overlay.show { opacity: 1; visibility: visible; }
+.modal-content {
+    background-color: var(--modal-bg); color: var(--text-color); padding: 25px; border-radius: 14px;
+    box-shadow: 0 8px 30px var(--shadow-color); max-width: 360px; text-align: center;
+    transform: translateY(15px) scale(0.98); opacity: 0;
+    transition: transform 0.3s var(--transition-cubic), opacity 0.3s var(--transition-cubic), background-color var(--transition-speed) var(--transition-cubic);
+    border: 1px solid var(--border-color);
+}
+.modal-overlay.show .modal-content { transform: translateY(0) scale(1); opacity: 1; }
+.modal-content h3 { font-size: 1.25em; margin-bottom: 10px; font-weight: 600; }
+.modal-content p { font-size: 0.95em; margin-bottom: 20px; line-height: 1.5; color: var(--text-color); opacity: 0.8; }
+.modal-content p a { font-weight: 500; opacity: 1; }
+.modal-content .cta-button { width: 100%; padding: 12px 20px; font-size: 1em; background: var(--primary-color); box-shadow: none; }
+.modal-content .cta-button:hover { background: color-mix(in srgb, var(--primary-color) 90%, black); }
+
+/* === CERTIFICATE VIEWER MODAL === */
+.certificate-modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(var(--blur-strength)); -webkit-backdrop-filter: blur(var(--blur-strength));
+    display: flex; justify-content: center; align-items: center; z-index: 10001;
+    opacity: 0; visibility: hidden; transition: opacity 0.4s var(--transition-cubic), visibility 0.4s var(--transition-cubic); padding: 20px;
+}
+.certificate-modal-overlay.show { opacity: 1; visibility: visible; }
+.certificate-modal-content {
+    background-color: var(--card-background); color: var(--text-color); padding: 20px; border-radius: var(--card-corner-radius);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3); max-width: 90vw; max-height: 90vh; text-align: center;
+    transform: translateY(20px) scale(0.95); opacity: 0;
+    transition: transform 0.4s var(--transition-cubic), opacity 0.4s var(--transition-cubic);
+    position: relative; display: flex; flex-direction: column; overflow: hidden;
+}
+.certificate-modal-overlay.show .certificate-modal-content { transform: translateY(0) scale(1); opacity: 1; }
+.certificate-modal-title { font-size: var(--text-md); margin-bottom: 15px; font-weight: 600; padding-right: 40px; text-align: left; }
+.certificate-modal-close {
+    position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.1); color: var(--text-color);
+    border: none; font-size: 1.8em; line-height: 1; padding: 0; width: 36px; height: 36px;
+    border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.certificate-modal-close:hover { background: rgba(0,0,0,0.2); transform: scale(1.1); }
+#certificateModalImage {
+    display: block; max-width: 100%; max-height: calc(90vh - 100px);
+    object-fit: contain; margin: 0 auto; border-radius: 8px;
+}
+/* === SKILLS SECTION === */
+.skills-section .skill-category { padding: 30px; margin-bottom: 25px; } /* More padding for desktop */
+.skills-section .skill-category h3 { margin-bottom: 25px; }
+.skill-item { background-color: transparent; border: none; padding: 0; margin-bottom: 25px; }
+.skill-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.skill-name { font-weight: 600; font-size: var(--text-base); margin-bottom: 0; }
+.skill-level-text { font-weight: 500; font-size: var(--text-sm); color: var(--primary-color); }
+.skill-bar-container { height: 12px; background-color: var(--skill-bar-bg); border-radius: 6px; overflow: hidden; position: relative; box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); }
+.skill-progress {
+    height: 100%; background: var(--primary-color); border-radius: 6px; width: 0;
+    transition: width 2s var(--transition-cubic); position: relative;
+}
+.skill-progress::after {
+    content: ''; position: absolute; top: 1px; left: 2px; right: 2px; height: 3px;
+    background: rgba(255,255,255,0.2); border-radius: 3px;
+}
+.skill-description { font-size: var(--text-sm); color: var(--secondary-color); line-height: 1.6; margin-top: 10px; }
+.skill-item-text-only p { font-size: var(--text-base); }
+
+/* === PROJECTS SECTION === */
+.projects-section .project-card {
+    background-color: var(--card-background); border-radius: var(--card-corner-radius); padding: 25px;
+    margin-bottom: 25px; box-shadow: 0 4px 15px var(--shadow-color); border: 1px solid var(--border-color);
+    transition: transform 0.3s var(--transition-cubic), box-shadow 0.3s var(--transition-cubic);
+}
+.projects-section .project-card:hover { transform: translateY(-6px); box-shadow: 0 8px 25px var(--shadow-color); }
+.project-card h3 { margin-bottom: 12px; display: flex; align-items: center; }
+.project-card h3 i { color: var(--primary-color); margin-right: 12px; font-size: 1.05em; }
+.project-type { font-size: var(--text-sm); font-weight: 500; color: var(--secondary-color); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+.project-card p, .project-card ul { font-size: var(--text-base); line-height: 1.7; margin-bottom: 18px; }
+.project-card ul { list-style: disc; padding-left: 20px; }
+.project-card ul li { margin-bottom: 8px; }
+.project-card .project-link { margin-top: 10px; font-size: var(--text-sm); padding: 10px 20px; }
+.project-card .link-note { font-size: calc(var(--text-sm) * 0.9); color: var(--secondary-color); margin-top: 8px; margin-bottom: 0; }
+
+/* === CERTIFICATES SECTION (Card Styling) === */
+.certificate-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+.certificate-item {
+    background-color: var(--card-background); border-radius: var(--card-corner-radius); padding: 0;
+    box-shadow: 0 5px 20px var(--shadow-color); border: 1px solid var(--border-color); text-align: left;
+    transition: transform 0.3s var(--transition-cubic), box-shadow 0.3s var(--transition-cubic);
+    cursor: pointer; display: flex; flex-direction: column; overflow: hidden;
+}
+.certificate-item:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 10px 30px var(--shadow-color); }
+.certificate-image-placeholder {
+    width: 100%; padding-bottom: 65%; background-color: var(--border-color);
+    position: relative; overflow: hidden;
+}
+.certificate-image-placeholder img {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.4s var(--transition-cubic);
+}
+.certificate-item:hover .certificate-image-placeholder img { transform: scale(1.1); }
+.certificate-content { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+.certificate-item .icon-cert-type { font-size: 1.8em; color: var(--primary-color); margin-bottom: 10px; width: fit-content; }
+.certificate-item h3 { margin-bottom: 8px; line-height: 1.3; }
+.certificate-item .certificate-issuer, .certificate-item .certificate-date { font-size: var(--text-sm); color: var(--secondary-color); margin-bottom: 4px; }
+.certificate-item .certificate-desc { font-size: var(--text-sm); color: var(--text-color); opacity: 0.9; line-height: 1.55; margin-top: 10px; margin-bottom: 15px; flex-grow: 1; }
+.certificate-item .certificate-credential { font-size: calc(var(--text-sm) * 0.9); margin-top: auto; }
+.certificate-item .certificate-credential a { color: var(--secondary-color); text-decoration: none; display: inline-flex; align-items: center; transition: color 0.2s ease; }
+.certificate-item .certificate-credential a:hover { color: var(--primary-color); }
+.certificate-item .certificate-credential i.fab.fa-linkedin { margin-right: 6px; font-size: 1.1em; color: var(--primary-color); }
+
+/* === FOOTER === */
+.footer {
+    background-color: var(--navbar-bg); border-top: 1px solid var(--navbar-border); padding: 25px 0;
+    text-align: center; color: var(--secondary-color); font-size: var(--text-sm);
+    box-shadow: 0 -1px 3px var(--shadow-color);
+}
+.footer .social-links { margin-top: 12px; }
+.footer .social-links a { color: var(--secondary-color); font-size: 1.4em; margin: 0 8px; transition: color var(--transition-speed) var(--transition-cubic), transform 0.2s ease-out; }
+.footer .social-links a:hover { color: var(--primary-color); transform: translateY(-2px); }
+
+/* === ANIMATIONS & KEYFRAMES === */
+.animate-on-scroll {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.7s var(--transition-cubic), transform 0.7s var(--transition-cubic);
+}
+.animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+.animate-on-scroll.is-visible.delay-1 { transition-delay: 0.1s; }
+.animate-on-scroll.is-visible.delay-2 { transition-delay: 0.2s; }
+.animate-on-scroll.is-visible.delay-3 { transition-delay: 0.3s; }
+
+@keyframes fadeInScale {
+    from { opacity: 0; transform: translateY(20px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Header - relatively unchanged but ensure it adapts */
-.header { /* ... existing styles ... */ }
-.navbar { /* ... existing styles ... */ }
-.nav-logo { font-size: clamp(1.4em, 2.5vw, 1.6em); } /* Responsive logo */
-.nav-link { font-size: clamp(0.9em, 1.5vw, 1em); } /* Responsive nav links */
-
-
-/* --- Desktop Specific Adjustments (add at the end of Part 1 or in a new desktop section) --- */
-@media (min-width: 1024px) { /* For laptops and larger desktops */
-    .container {
-        max-width: 1200px; /* Increase max-width for larger screens */
-    }
+/* === DESKTOP & LARGE SCREEN ADJUSTMENTS === */
+@media (min-width: 1024px) { /* Laptops and larger */
+    .container { max-width: 1200px; }
     .hero-content h1 { font-size: var(--text-xl-desktop); }
     .section-title { font-size: var(--text-lg-desktop); margin-bottom: 50px; }
     .project-card h3, .skill-category h3, .about-card h3, .certificate-item h3 { font-size: clamp(1.3rem, 1.8vw + 0.5rem, 1.7rem); }
     .hero-description { font-size: clamp(1.1rem, 1.2vw + 0.5rem, 1.3rem); max-width: 700px; }
     .about-card p, .about-card ul li { font-size: clamp(1rem, 1vw + 0.5rem, 1.1rem); }
     .project-card p, .project-card ul { font-size: clamp(0.95rem, 1vw + 0.4rem, 1.05rem); }
+    .about-content-wrapper { grid-template-columns: 1.5fr 1fr; align-items: flex-start; }
+    .summary-card { grid-column: auto; }
+    .certificate-list { gap: 30px; }
 }
 
-@media (min-width: 1440px) { /* For very large screens / TVs */
-    .container {
-        max-width: 1350px;
-    }
+@media (min-width: 1440px) { /* Very large screens */
+    .container { max-width: 1350px; }
     .hero-content { max-width: 850px; }
     .hero-description { max-width: 750px; }
-    /* You might add more specific adjustments here if needed */
+    .certificate-list { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
 }
-/* ... (Keep existing .main, .page-content, .hero-section (with responsive H1), .about-me-section, .contact-section, .modal-overlay for contact form)... */
 
-/* --- Enhanced About Me Section for Desktop --- */
-@media (min-width: 992px) {
-    .about-content-wrapper {
-        grid-template-columns: 1.5fr 1fr; /* Give summary card more space */
-        align-items: flex-start; /* Align cards to the top */
+/* Mobile-specific overrides (already present in some sections, consolidating here) */
+@media (max-width: 576px) {
+    main {padding-top: 65px;}
+    .page-content { padding-top: 80px; }
+    .hero-content h1 { font-size: var(--text-xl); } /* Uses clamp, so should adapt */
+    .section-title { font-size: var(--text-lg); margin-bottom: 30px; }
+    .about-card { padding: 20px; }
+    .contact-form { padding: 25px; }
+    .skills-section .skill-category { padding: 20px; }
+    .certificate-item .certificate-content { padding: 15px; }
+    .modal-content { max-width: 90%; padding: 20px; }
+    .certificate-modal-content { padding: 15px; }
+    .certificate-modal-title { font-size: var(--text-base); padding-right: 35px; }
+    .certificate-modal-close { top:10px; right:10px; width:30px; height:30px; font-size:1.5em;}
     }
-    .summary-card {
-        grid-column: auto; /* Reset span if previously set */
-    }
-    .education-card, .interpersonal-skills-card {
-        /* Can stack on the right or be separate */
-    }
-}
-
-/* --- Certificate Viewer Modal --- */
-.certificate-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Darker overlay for focus */
-    backdrop-filter: blur(var(--blur-strength));
-    -webkit-backdrop-filter: blur(var(--blur-strength));
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10001; /* Higher than contact modal */
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.4s var(--transition-cubic), visibility 0.4s var(--transition-cubic);
-    padding: 20px; /* Padding for smaller screens */
-}
-
-.certificate-modal-overlay.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-.certificate-modal-content {
-    background-color: var(--card-background);
-    color: var(--text-color);
-    padding: 20px;
-    border-radius: var(--card-corner-radius);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-    max-width: 90vw; /* Max width relative to viewport */
-    max-height: 90vh; /* Max height relative to viewport */
-    text-align: center;
-    transform: translateY(20px) scale(0.95);
-    opacity: 0;
-    transition: transform 0.4s var(--transition-cubic), opacity 0.4s var(--transition-cubic);
-    position: relative; /* For close button positioning */
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; /* Prevent content spill */
-}
-
-.certificate-modal-overlay.show .certificate-modal-content {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-}
-
-.certificate-modal-title {
-    font-size: var(--text-md);
-    margin-bottom: 15px;
-    font-weight: 600;
-    padding-right: 40px; /* Space for close button */
-    text-align: left;
-}
-
-.certificate-modal-close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(0,0,0,0.1);
-    color: var(--text-color);
-    border: none;
-    font-size: 1.8em; /* Larger close icon */
-    line-height: 1;
-    padding: 0;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-}
-.certificate-modal-close:hover {
-    background: rgba(0,0,0,0.2);
-    transform: scale(1.1);
-}
-
-#certificateModalImage {
-    display: block;
-    max-width: 100%;
-    max-height: calc(90vh - 100px); /* Adjust based on title/padding */
-    object-fit: contain; /* Show entire image, no cropping */
-    margin: 0 auto; /* Center image */
-    border-radius: 8px; /* Optional: slight rounding on image itself */
-}
-/* --- Skills Section - iOS Style Proficiency --- */
-.skills-section .skill-category {
-    /* ... existing styles ... */
-    padding: 30px; /* More padding for desktop */
-}
-
-.skills-section .skill-category h3 {
-    /* ... existing styles, ensure responsive font size ... */
-    margin-bottom: 25px;
-}
-
-.skill-item {
-    /* ... existing styles ... */
-    background-color: transparent; /* Remove nested background */
-    border: none; /* Remove nested border */
-    padding: 0; /* Remove nested padding */
-    margin-bottom: 25px; /* Space between skills */
-}
-
-.skill-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.skill-name {
-    font-weight: 600;
-    font-size: var(--text-base); /* Use responsive base text */
-    color: var(--text-color);
-    margin-bottom: 0; /* Handled by skill-info */
-}
-
-.skill-level-text { /* New class for percentage text */
-    font-weight: 500;
-    font-size: var(--text-sm);
-    color: var(--primary-color);
-}
-
-.skill-bar-container { /* New container for the bar itself */
-    height: 12px; /* iOS like bar height */
-    background-color: color-mix(in srgb, var(--border-color) 50%, transparent); /* Softer background */
-    border-radius: 6px; /* Fully rounded ends */
-    overflow: hidden;
-    position: relative;
-    box-shadow: inset 0 1px 2px rgba(0,0,0,0.05); /* Subtle inner shadow */
-}
-
-.skill-progress {
-    height: 100%;
-    background: var(--primary-color); /* Solid primary color, or subtle gradient */
-    /* Optional subtle gradient:
-    background: linear-gradient(90deg, var(--primary-color) 0%, color-mix(in srgb, var(--primary-color) 70%, #fff) 100%);
-    */
-    border-radius: 6px;
-    width: 0;
-    transition: width 2s var(--transition-cubic); /* Slower, smoother animation */
-    position: relative;
-}
-/* Optional: Add a very subtle shine/highlight to the progress bar */
-.skill-progress::after {
-    content: '';
-    position: absolute;
-    top: 1px;
-    left: 2px;
-    right: 2px;
-    height: 3px; /* Thin highlight */
-    background: rgba(255,255,255,0.2);
-    border-radius: 3px;
-}
-
-.skill-description {
-    font-size: var(--text-sm);
-    color: var(--secondary-color);
-    line-height: 1.6;
-    margin-top: 10px;
-}
-
-.skill-item-text-only p {
-    font-size: var(--text-base);
-    /* ... other styles ... */
-}
-
-
-/* --- Projects Section --- */
-@media (min-width: 768px) { /* Tablet and up */
-    .projects-section .project-card {
-        /* Potentially make cards wider or arrange in 2 columns if many projects */
-    }
-}
-@media (min-width: 1024px) {
-    .projects-section .container {
-        /* Adjust grid for more columns if needed */
-        /* e.g. display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 30px; */
-    }
-}
-
-
-/* --- Certificates Section (Card Styling) --- */
-.certificate-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
-}
-@media (min-width: 768px) {
-    .certificate-list {
-        gap: 30px; /* Slightly more gap on larger screens */
-    }
-}
-@media (min-width: 1200px) { /* More columns on very wide screens */
-    .certificate-list {
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    }
-}
-
-.certificate-item {
-    background-color: var(--card-background);
-    border-radius: var(--card-corner-radius);
-    padding: 0; /* Padding will be inside .certificate-content */
-    box-shadow: 0 5px 20px var(--shadow-color);
-    border: 1px solid var(--border-color);
-    text-align: left; /* Align text left */
-    transition: transform 0.3s var(--transition-cubic), box-shadow 0.3s var(--transition-cubic);
-    cursor: pointer; /* Indicate it's clickable */
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; /* Important for border-radius on image */
-}
-.certificate-item:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 10px 30px var(--shadow-color);
-}
-
-.certificate-image-placeholder {
-    width: 100%;
-    padding-bottom: 65%; /* Adjust for common certificate aspect ratio */
-    background-color: var(--border-color);
-    position: relative;
-    overflow: hidden;
-}
-.certificate-image-placeholder img {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s var(--transition-cubic);
-}
-.certificate-item:hover .certificate-image-placeholder img { transform: scale(1.1); }
-
-.certificate-content {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1; /* Allows credential link to be pushed to bottom */
-}
-
-.certificate-item .icon-cert-type { /* New icon for type of cert */
-    font-size: 1.8em;
-    color: var(--primary-color);
-    margin-bottom: 10px;
-    width: fit-content; /* Don't take full width */
-}
-
-.certificate-item h3 {
-    font-size: var(--text-md); /* Use responsive size */
-    font-weight: 600;
-    margin-bottom: 8px;
-    line-height: 1.3;
-}
-.certificate-item .certificate-issuer,
-.certificate-item .certificate-date {
-    font-size: var(--text-sm);
-    color: var(--secondary-color);
-    margin-bottom: 4px;
-}
-.certificate-item .certificate-desc { /* Description */
-    font-size: var(--text-sm);
-    color: var(--text-color); opacity: 0.9;
-    line-height: 1.55;
-    margin-top: 10px;
-    margin-bottom: 15px;
-    flex-grow: 1; /* Pushes credential down */
-}
-.certificate-item .certificate-credential {
-    font-size: calc(var(--text-sm) * 0.9); /* Even smaller */
-    margin-top: auto; /* Push to bottom */
-}
-.certificate-item .certificate-credential a {
-    color: var(--secondary-color);
-    text-decoration: none;
-    display: inline-flex; /* Align icon and text */
-    align-items: center;
-    transition: color 0.2s ease;
-}
-.certificate-item .certificate-credential a:hover {
-    color: var(--primary-color);
-}
-.certificate-item .certificate-credential i.fab.fa-linkedin {
-    margin-right: 6px;
-    font-size: 1.1em; /* Slightly larger icon */
-    color: var(--primary-color); /* Make LinkedIn icon stand out */
-}
-
-/* ... (Footer, Animations, existing Responsive adjustments for mobile/tablet) ... */
-/* Ensure scroll animations are smooth */
-.animate-on-scroll {
-    opacity: 0;
-    transform: translateY(40px); /* Slightly more travel for desktop */
-    transition: opacity 0.7s var(--transition-cubic), transform 0.7s var(--transition-cubic);
-}
-.animate-on-scroll.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-}
